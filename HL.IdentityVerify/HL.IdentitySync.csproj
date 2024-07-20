@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HL.IdentityCache\HL.IdentityCache.csproj" />
+    <ProjectReference Include="..\HL.IdentityUtility\HL.IdentityUtility.csproj" />
+    <ProjectReference Include="..\HL.Identity\HL.Identity.csproj" />
+  </ItemGroup>
+
+</Project>

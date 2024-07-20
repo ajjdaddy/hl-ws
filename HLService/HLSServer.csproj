@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	<IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
+	<Title>HL Identity Service</Title>
+	<Authors>Dieu Phap</Authors>
+	<Product>HL Identity Service</Product>
+	<Description>HuongLinh Identiy Management</Description>
+	<Copyright>Copyright © 2023-2024 Dieu Phap. All rights reserved.</Copyright>
+	<AssemblyVersion>1.0.0.1</AssemblyVersion>
+	<FileVersion>1.0.0.1</FileVersion>
+	
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.WindowsServices" Version="6.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HL.IdentityCache\HL.IdentityCache.csproj" />
+    <ProjectReference Include="..\HL.IdentityUtility\HL.IdentityUtility.csproj" />
+    <ProjectReference Include="..\HL.IdentityVerify\HL.IdentitySync.csproj" />
+    <ProjectReference Include="..\HL.Identity\HL.Identity.csproj" />
+  </ItemGroup>
+
+</Project>

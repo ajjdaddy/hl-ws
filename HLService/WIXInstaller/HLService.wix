@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<?define ProductVersion="1.0.0.1"?>
+<Product Name="HL Identity Service $(var.ProductVersion)" Id='*' UpgradeCode='528815de-e31a-4147-bc2f-8017391d7092'
+    Language='1033' Codepage='1252' Version="$(var.ProductVersion)" Manufacturer='Dieu Phap'>
+    <Package Id="*" Keywords='Installer' Description="HL Identity Service Installer"
+        Comments='HL Identity Service' Manufacturer='Dieu Phap' 
+        Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+    <Upgrade Id='528815de-e31a-4147-bc2f-8017391d7092'>
+        <UpgradeVersion OnlyDetect='no' Property='PREVIOUSFOUND'
+            Minimum='1.0.0' IncludeMinimum='yes'
+            Maximum="$(var.ProductVersion)" IncludeMaximum='yes' />
+	</Upgrade>
+	<WixVariable Id="WixUILicenseRtf" Value="./eula.rtf" />
+    <Media Id='1' Cabinet='HLIdentityService.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="HL Identity Service Installation [1]" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <!-- Default configuration values -->
+    <Property Id="SVC_USERNAME" Secure="yes">LocalSystem</Property>
+    <Property Id="SVC_PASSWORD" Secure="yes"></Property>
+    <Property Id="TEMP_FOLDER" Secure="yes">C:\ProgramData\HLIdentity</Property>
+    <Property Id="CONFIGVALUE_CUSTOMERRORS">Off</Property>
+    <!-- MAIN TARGET FOLDER/FILES -->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+        <Directory Id='ProgramFilesFolder' Name='HLTOP'>
+            <Directory Id='INSTALLDIR' Name='HLIdentityService'>
+                <Component Id="SQLLite" Guid="*">
+			        <File Id="F8eb5066730d24a46ac644b8498db2e82"  DiskId='1' KeyPath="yes" Source="../bin/Release/net8.0/publish/e_sqlite3.dll" />
+                </Component>
+                <Component Id="IDMagick" Guid="*">
+			        <File Id="F53ae6959962a43adbfc6a0635e41b6dc"  DiskId='1' KeyPath="yes" Source="../bin/Release/net8.0/publish/Magick.Native-Q16-x64.dll" />
+                </Component>
+                <Component Id="AppSettings" Guid="*">
+			        <File Id="H53ae6959962a43adbfc6a0635e41b6dc"  DiskId='1' KeyPath="yes" Source="../bin/Release/net8.0/publish/appsettings.json" />
+                </Component>
+                <Component Id="PfxFile" Guid="*">
+			        <File Id="I53ae6959962a43adbfc6a0635e41b6dc"  DiskId='1' KeyPath="yes" Source="../hlservice-certificate.pfx" />
+                </Component>
+                <Component Id="SqlFileDb" Guid="*">
+			        <File Id="A982709a9c3f482bab748c907a921d17"  DiskId='1' KeyPath="yes" Source="../HLDatabase/hl-identity.db" />
+                </Component>
+                <Component Id="HLService" Guid="*">
+			        <File Id="b340539c30e047be89a098139e2a927a"  DiskId='1' KeyPath="yes" Source="../bin/Release/net8.0/publish/HLSServer.exe" />
+		            <ServiceInstall Id="HLServer" Name="HL.IdentityServer" DisplayName="HL Identity Service" Description="HL Identity Service - $(var.ProductVersion)" Start="demand" Type="ownProcess" ErrorControl="normal" Account="[SVC_USERNAME]"  Password="[SVC_PASSWORD]" Vital="yes" Interactive="no">
+			        </ServiceInstall>
+              	    <ServiceControl Id="HLServer" Name="HL.IdentityServer"  Stop="both" Remove="uninstall" Start="install" Wait="yes"/>
+                </Component>
+            </Directory>
+        </Directory>
+    </Directory>
+<Feature Id='Complete' Title='HL Identity Service' Description='The complete package.'
+    Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+    <Feature Id='MainProgram' Title='HL Identity Service' Description='HL Identity Service' Level='1' ConfigurableDirectory='INSTALLDIR'>
+	    <ComponentRef Id="SqlFileDb" />
+	    <ComponentRef Id="SQLLite" />
+	    <ComponentRef Id="HLService" />
+	    <ComponentRef Id="IDMagick" />
+	    <ComponentRef Id="AppSettings" />
+	    <ComponentRef Id="PfxFile" />
+    </Feature>
+</Feature>
+	
+<CustomAction Id='AlreadyUpdated' Error='[ProductName] is already installed.' />
+<CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
+<InstallExecuteSequence>
+	<RemoveExistingProducts Before="InstallInitialize" />
+</InstallExecuteSequence>
+<UIRef Id="WixUI_InstallDirModified" /> 
+</Product>
+</Wix>

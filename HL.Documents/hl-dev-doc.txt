@@ -1,0 +1,9 @@
+//TODO (CD): Test/update for valid source
+1. HL development software components
+	a. Visual Studio Installer
+	b. Visual Studio 2022 (Community license - free)
+	c. .NET SDK 8.0 - https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.303-windows-x64-installer
+	d. WIX - https://github.com/wixtoolset/wix3/releases/download/wix3141rtm/wix314.exe
+	e. Git - https://sourceforge.net/projects/git-for-windows.mirror/files/v2.45.2.windows.1/Git-2.45.2-64-bit.exe/download
+	f. Git-lfs -  https://github.com/git-lfs/git-lfs/releases/download/v3.5.1/git-lfs-windows-v3.5.1.exe
+	g. SQLite DB browser - https://download.sqlitebrowser.org/DB.Browser.for.SQLite-3.12.2-win64.msi

@@ -1,2 +1,2 @@
 # hl-ws
-Huong Linh web service
+HuongLinh Client/Server service manages HuongLinh data.
