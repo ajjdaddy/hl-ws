@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<?define ProductVersion="1.0.0.1"?>
+<Product Name="HL Identity Client WF Application $(var.ProductVersion)" Id='*' UpgradeCode='A9A43422-A04B-46A6-A6A1-9AFA2A820BDA'
+    Language='1033' Codepage='1252' Version="$(var.ProductVersion)" Manufacturer='Dieu Phap'>
+    <Package Id="*" Keywords='Installer' Description="HL Identity Client WF Application Installer"
+        Comments='HL Identity Client WF Application' Manufacturer='Dieu Phap' 
+        Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+    <Upgrade Id='A9A43422-A04B-46A6-A6A1-9AFA2A820BDA'>
+        <UpgradeVersion OnlyDetect='no' Property='PREVIOUSFOUND'
+            Minimum='1.0.0' IncludeMinimum='yes'
+            Maximum="$(var.ProductVersion)" IncludeMaximum='yes' />
+	</Upgrade>
+	<WixVariable Id="WixUILicenseRtf" Value="./eula.rtf" />
+    <Media Id='1' Cabinet='HLCLientWFApp.cab' EmbedCab='yes' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="HL Identity Client WF Application Installation [1]" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+    <!-- Default configuration values -->
+    <Property Id="SVC_USERNAME" Secure="yes">LocalSystem</Property>
+    <Property Id="SVC_PASSWORD" Secure="yes"></Property>
+    <Property Id="TEMP_FOLDER" Secure="yes">C:\ProgramData\HLIdentity</Property>
+    <Property Id="CONFIGVALUE_CUSTOMERRORS">Off</Property>
+    <!-- MAIN TARGET FOLDER/FILES -->
+    <Directory Id='TARGETDIR' Name='SourceDir'>
+        <Directory Id='ProgramFilesFolder' Name='HLTOP'>
+            <Directory Id='INSTALLDIR' Name='HLCLientWFApplication'>
+                <Component Id="HLClientWFApp" Guid="*">
+			        <File Id="b340539c30e047be89a098139e2a927a"  DiskId='1' KeyPath="yes" Source="../bin/Release/net8.0-windows/publish/HL.ClientWFApp.exe" />
+                </Component>
+            </Directory>
+        </Directory>
+    </Directory>
+<Feature Id='Complete' Title='HL Identity Client WF Application' Description='The complete package.'
+    Display='expand' Level='1' ConfigurableDirectory='INSTALLDIR'>
+    <Feature Id='MainProgram' Title='HL Identity Client WF Application' Description='HL Identity Client WF Application' Level='1' ConfigurableDirectory='INSTALLDIR'>
+	    <ComponentRef Id="HLClientWFApp" />
+    </Feature>
+</Feature>
+	
+<CustomAction Id='AlreadyUpdated' Error='[ProductName] is already installed.' />
+<CustomAction Id='NoDowngrade' Error='A later version of [ProductName] is already installed.' />
+<InstallExecuteSequence>
+	<RemoveExistingProducts Before="InstallInitialize" />
+</InstallExecuteSequence>
+<UIRef Id="WixUI_InstallDirModified" /> 
+</Product>
+</Wix>

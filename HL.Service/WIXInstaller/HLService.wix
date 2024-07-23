@@ -36,14 +36,20 @@
                 <Component Id="PfxFile" Guid="*">
 			        <File Id="I53ae6959962a43adbfc6a0635e41b6dc"  DiskId='1' KeyPath="yes" Source="../hlservice-certificate.pfx" />
                 </Component>
-                <Component Id="SqlFileDb" Guid="*">
-			        <File Id="A982709a9c3f482bab748c907a921d17"  DiskId='1' KeyPath="yes" Source="../HLDatabase/hl-identity.db" />
-                </Component>
-                <Component Id="HLService" Guid="*">
-			        <File Id="b340539c30e047be89a098139e2a927a"  DiskId='1' KeyPath="yes" Source="../bin/Release/net8.0/publish/HLSServer.exe" />
-		            <ServiceInstall Id="HLServer" Name="HL.IdentityServer" DisplayName="HL Identity Service" Description="HL Identity Service - $(var.ProductVersion)" Start="demand" Type="ownProcess" ErrorControl="normal" Account="[SVC_USERNAME]"  Password="[SVC_PASSWORD]" Vital="yes" Interactive="no">
+				<Component Id="SqlFileDb" Guid="*">
+					<File Id="A982709a9c3f482bab748c907a921d17"  DiskId='1' KeyPath="yes" Source="../HLDatabase/hl-identity.db" />
+				</Component>
+				<Component Id="HLConfApp" Guid="*">
+					<File Id="A422709a9c3f482bab748c907a921d17"  DiskId='1' KeyPath="yes" Source="../../HL.IdentityConfigApp/bin/Release/net8.0-windows/publish/HL.IdentityConfigApp.exe" />
+				</Component>
+				<Component Id="HLClientWFApp" Guid="*">
+					<File Id="b422539c30e047be89a098139e2a927a"  DiskId='1' KeyPath="yes" Source="../../HL.ClientWFApp/bin/Release/net8.0-windows/publish/HL.ClientWFApp.exe" />
+				</Component>
+				<Component Id="HLService" Guid="*">
+			        <File Id="b340539c30e047be89a098139e2a927a"  DiskId='1' KeyPath="yes" Source="../bin/Release/net8.0/publish/HL.Service.exe" />
+		            <ServiceInstall Id="HLService" Name="HLIdentityService" DisplayName="HL Identity Service" Description="HL Identity Service - $(var.ProductVersion)" Start="demand" Type="ownProcess" ErrorControl="normal" Account="[SVC_USERNAME]"  Password="[SVC_PASSWORD]" Vital="yes" Interactive="no">
 			        </ServiceInstall>
-              	    <ServiceControl Id="HLServer" Name="HL.IdentityServer"  Stop="both" Remove="uninstall" Start="install" Wait="yes"/>
+              	    <ServiceControl Id="HLService" Name="HLIdentityService"  Stop="both" Remove="uninstall" Start="install" Wait="yes"/>
                 </Component>
             </Directory>
         </Directory>
@@ -54,6 +60,8 @@
 	    <ComponentRef Id="SqlFileDb" />
 	    <ComponentRef Id="SQLLite" />
 	    <ComponentRef Id="HLService" />
+	    <ComponentRef Id="HLConfApp" />
+	    <ComponentRef Id="HLClientWFApp" />
 	    <ComponentRef Id="IDMagick" />
 	    <ComponentRef Id="AppSettings" />
 	    <ComponentRef Id="PfxFile" />

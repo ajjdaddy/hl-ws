@@ -1,7 +1,8 @@
 using HL.IdentitySync;
 using HL.IdentityUtility;
+using HL.Shared;
 
-namespace HLSServer.Services
+namespace HL.Service.Services
 {
     public class HLServiceSync : BackgroundService
     {
@@ -11,7 +12,7 @@ namespace HLSServer.Services
         public HLServiceSync(IHLSync pHLSync, IHLLogger hlLogger)
         {
             hlSync = pHLSync;
-            this._hlLogger = hlLogger;
+            _hlLogger = hlLogger;
         }
 
         /// <summary>

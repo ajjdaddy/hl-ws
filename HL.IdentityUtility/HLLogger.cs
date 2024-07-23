@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
+using HL.Shared;
 
 namespace HL.IdentityUtility
 {

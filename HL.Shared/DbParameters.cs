@@ -1,13 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace HL.IdentityConfigApp
+namespace HL.Shared
 {
-    // TODO: Future request type
     public enum ServerSystemType
     {
         None = -1,
@@ -40,8 +37,8 @@ namespace HL.IdentityConfigApp
         }
     }
 
-    [Serializable()]
-    [XmlRoot("DbParameters", Namespace = "", IsNullable = false)]
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlRootAttribute("DbParameters", Namespace = "", IsNullable = false)]
     public class DbParameters
     {
         public static string AppDataFolder = @"HLIdentity";
@@ -50,7 +47,6 @@ namespace HL.IdentityConfigApp
         public DbParameters()
         {
             DBDatabaseConfig = DatabaseConfig;
-            //DBEnrollmentConfig = EnrollmentConfig;
             DBHLIdentityConfig = HLIdentityConfig;
             DBSystemType = (int)(SystemType == 0 ? ServerSystemType.None : ServerSystemType.HLClient);
         }
@@ -150,7 +146,7 @@ namespace HL.IdentityConfigApp
             if (HLIdentityConfig == null)
                 HLIdentityConfig = new HLIdentityConfiguration();
 
-            if (string.IsNullOrEmpty(dbConnect.DBDebugFolder))
+            if (String.IsNullOrEmpty(dbConnect.DBDebugFolder))
                 DebugFolder = AppFolder;
             else
                 DebugFolder = dbConnect.DBDebugFolder;
@@ -167,29 +163,29 @@ namespace HL.IdentityConfigApp
                 HLIdentityConfig.HLServicePort = 8002;
             }
 
-            if (string.IsNullOrEmpty(HLIdentityConfig.IDServiceListenAddress))
+            if (String.IsNullOrEmpty(HLIdentityConfig.IDServiceListenAddress))
             {
                 HLIdentityConfig.IDServiceListenAddress = "localhost";
             }
 
-            if (string.IsNullOrEmpty(HLIdentityConfig.HLServiceName))
+            if (String.IsNullOrEmpty(HLIdentityConfig.HLServiceName))
             {
-                HLIdentityConfig.HLServiceName = "HL.IdentityServer";
+                HLIdentityConfig.HLServiceName = "HLIdentityService";
             }
 
-            if (string.IsNullOrEmpty(HLIdentityConfig.HLServiceToken))
+            if (String.IsNullOrEmpty(HLIdentityConfig.HLServiceToken))
             {
                 HLIdentityConfig.HLServiceToken = CreateSecureRandomString();
                 HLIdentityConfig.HLServiceTokenExpiryDate = GenerateTokenExpiryDate();
             }
 
-            if (string.IsNullOrEmpty(HLIdentityConfig.HLServiceTokenExpiryDate) ||
+            if (String.IsNullOrEmpty(HLIdentityConfig.HLServiceTokenExpiryDate) ||
                 DateTime.Parse(HLIdentityConfig.HLServiceTokenExpiryDate) < DateTime.Now)
             {
                 HLIdentityConfig.HLServiceTokenExpiryDate = GenerateTokenExpiryDate();
             }
 
-            if (string.IsNullOrEmpty(HLIdentityConfig.HLServiceSecret))
+            if (String.IsNullOrEmpty(HLIdentityConfig.HLServiceSecret))
             {
                 HLIdentityConfig.HLServiceSecret = CreateSecureRandomString();
             }
@@ -266,10 +262,10 @@ namespace HL.IdentityConfigApp
         {
             try
             {
-                if (string.IsNullOrEmpty(toEncrypt))
+                if (String.IsNullOrEmpty(toEncrypt))
                     return null;
 
-                byte[] data = Encoding.ASCII.GetBytes(toEncrypt);
+                byte[] data = UnicodeEncoding.ASCII.GetBytes(toEncrypt);
 
                 // Encrypt the data using DataProtectionScope.CurrentUser. The result can be decrypted
                 //  only by the same current user.
@@ -291,7 +287,7 @@ namespace HL.IdentityConfigApp
                 //Decrypt the data using DataProtectionScope.CurrentUser.
                 byte[] data = Base64Decode(encrypted);
                 byte[] t = ProtectedData.Unprotect(data, hamburger, DataProtectionScope.LocalMachine);
-                return Encoding.ASCII.GetString(t);
+                return UnicodeEncoding.ASCII.GetString(t);
             }
             catch (Exception e)
             {
@@ -301,12 +297,12 @@ namespace HL.IdentityConfigApp
 
         public static string Base64Encode(byte[] data)
         {
-            return Convert.ToBase64String(data);
+            return System.Convert.ToBase64String(data);
         }
 
         public static byte[] Base64Decode(string base64EncodedData)
         {
-            return Convert.FromBase64String(base64EncodedData);
+            return System.Convert.FromBase64String(base64EncodedData);
         }
     }
 
@@ -319,14 +315,14 @@ namespace HL.IdentityConfigApp
             ReceiveTimeoutSeconds = 3;
             SendTimeoutSeconds = 3;
             ConnectionPool = 50;
-            HLServiceName = "HL.IdentityServer";
+            HLServiceName = "HLIdentityService";
         }
 
         public int HLServicePort { get; set; }
         public string IDServiceListenAddress { get; set; }
         public int UseSSL { get; set; }
 
-        // Default/Configured username/secret for the ID Service in the ID Service tab of the Hl Configuration Utility
+        // Default/Configured username/secret for the ID Service in the ID Service tab of the HL Configuration Utility
         public string HLServiceToken { get; set; }
         public string HLServiceTokenExpiryDate { get; set; }
         public string HLServiceSecret64 { get; set; }

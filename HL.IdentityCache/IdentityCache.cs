@@ -1,5 +1,6 @@
 ﻿using HL.IdentityUtility;
 using Microsoft.EntityFrameworkCore;
+using HL.Shared;
 
 namespace HL.IdentityCache
 {

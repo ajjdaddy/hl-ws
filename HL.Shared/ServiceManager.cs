@@ -1,9 +1,8 @@
-﻿using System;
-using System.ServiceProcess;
+﻿using System.ServiceProcess;
 
-namespace HL.IdentityConfigApp
+namespace HL.Shared
 {
-    class ServiceManager
+    public class ServiceManager
     {
         public static void StopService(string serviceName, int timeoutMilliseconds)
         {
@@ -12,6 +11,7 @@ namespace HL.IdentityConfigApp
             {
                 // convert ms to timespan
                 TimeSpan timeout = TimeSpan.FromMilliseconds(timeoutMilliseconds);
+
                 service.Stop();
                 service.WaitForStatus(ServiceControllerStatus.Stopped, timeout);
             }
@@ -28,6 +28,7 @@ namespace HL.IdentityConfigApp
             {
                 // convert ms to timespan
                 TimeSpan timeout = TimeSpan.FromMilliseconds(timeoutMilliseconds);
+
                 service.Start();
                 service.WaitForStatus(ServiceControllerStatus.Running, timeout);
             }
@@ -37,15 +38,10 @@ namespace HL.IdentityConfigApp
             }
         }
 
-        /// <summary>
-        /// TODO: Fix restart HL service
-        /// </summary>
-        /// <param name="serviceName"></param>
-        /// <param name="timeoutMilliseconds"></param>
-        /// <exception cref="Exception"></exception>
         public static void RestartService(string serviceName, int timeoutMilliseconds)
         {
             ServiceController service = new ServiceController(serviceName);
+
             try
             {
                 if (ServiceIsRunning(serviceName))
@@ -79,6 +75,7 @@ namespace HL.IdentityConfigApp
         public static bool ServiceIsRunning(string serviceName)
         {
             ServiceController service = new ServiceController(serviceName);
+
             if (service.Status == ServiceControllerStatus.Running)
             {
                 return true;

@@ -3,7 +3,8 @@ using HL.IdentityUtility;
 using HL.IdentityCache;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Diagnostics;
-using HLSServer.Services;
+using HL.Service.Services;
+using HL.Shared;
 
 DbParameters.GetDbConfig();
 string fname = "hl-identity.db";

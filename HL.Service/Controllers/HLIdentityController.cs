@@ -4,17 +4,17 @@ using HL.IdentityUtility;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using System.Diagnostics;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
+using HL.Shared;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace HLSServer.Controllers
+namespace HL.Service.Controllers
 {
     [Route("[controller]")]
     public class HLIdentityController : ControllerBase
@@ -82,7 +82,7 @@ namespace HLSServer.Controllers
 
                 // TODO (): Use CacheManager.Instance if needed
                 bool ok = await cache.AddHuongLinh(hlIdentityData.Name, new HuongLinh() { ID = hlIdentityData.Id, Name = hlIdentityData.Name, LastModifiedDateTime = hlIdentityData.LastModifyDateTime });
-                if (!ok) 
+                if (!ok)
                 {
                     string errorString = "Fail to add Huong Linh!";
                     hlLogger.WriteLogError(HttpStatusCode.BadRequest.ToString(), "Post", errorString);

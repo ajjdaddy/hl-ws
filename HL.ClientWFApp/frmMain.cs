@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Windows.Forms;
 using HL.Shared;
 
-namespace HL.IdentityConfigApp
+namespace HL.ClientWFApp
 {
     public partial class frmMain : Form
     {
@@ -272,6 +273,39 @@ namespace HL.IdentityConfigApp
                 txtHLServiceSecret.Text = DbParameters.CreateSecureRandomString();
 
                 DataHasChanged(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// TODO: Send new HL to HL Identity Service to create a new HL in hl-identity database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            // TODO: Setup httpClient
+            // TODO: Read HL Identity server URL, credential
+            // TODO: Read HL fields and create XML
+            // TODO: send POST an XML request to HL Identity server
+            // TODO: Display status on the common status control.
+            lblStatus.Text = $"Sample created HL return: '{HttpStatusCode.OK.ToString()}'";
+        }
+
+        private void clientListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // CRUD HL client list
+                // TODO: Show HL clients list
+                tabHLClientList.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to show clients: " + ex.Message, "Client list error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                ;
             }
         }
     }

@@ -7,10 +7,10 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <PlatformTarget>x64</PlatformTarget>
     <Authors>Dieu Phap</Authors>
-    <PackageId>HuongLinh Identity Service Configuration</PackageId>
-    <Description>This application manages the HuongLinh Identity Service configuration</Description>
+    <PackageId>HuongLinh Identity Client Application</PackageId>
+    <Description>This HL client application manages the HuongLinh identity</Description>
     <Copyright>Copyright © 2024 Dieu Phap. All rights reserved.</Copyright>
-    <Title>HuongLinh Identity Service Configuration</Title>
+    <Title>HuongLinh Identity Client Application</Title>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
   </PropertyGroup>
